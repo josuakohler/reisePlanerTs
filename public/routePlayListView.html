@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Playlist View</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+
+<body>
+    <div id="app">
+         <button v-on:click="goBack">Back</button>
+            <h1>{{ selectedRouteList.name }}</h2>
+        <div class="container">
+           
+            <div class="route-list">
+                <div class="route-list-item" v-for="connection in selectedRouteList.routen" :key="connection.from.departure">
+                    <div class="route-header">
+                        <div class="route-icon">🚆</div>
+                        <div class="route-info">
+                            <div class="route-line">Richtung {{ connection.to.station.name }}</div>
+                            <div class="route-time"></div>
+                            <div class="route-platform">
+                                Gl. {{ connection.from.platform }}
+                            </div>
+                            <div class="route-duration">
+                                {{ calculateDuration(connection.from.departure, connection.to.arrival) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="route-progress">
+                        <div class="progress-dot"></div>
+                        <div class="progress-line"></div>
+                        <div class="progress-dot"></div>
+                    </div>
+                    <div class="route-capacity">
+                        <span>{{ formatTime(connection.from.departure) }}</span>
+                        <span>{{ formatTime(connection.to.arrival) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="../src/routePlayListView.js"></script>
+</body>
+
+</html>

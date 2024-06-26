@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Search</title>
+    <!-- Add Vue.js CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>    
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="routes">
+                <input type="text" v-on:input="setName" v-model="routePlayListName">
+                <button v-on:click="createList">Create List</button>
+                <div class="route-list">
+                    <div class="route-list-item" v-for="(route, idxList) in routePlayList" :key="idxList">
+                        <p>{{ route.name }}</p>
+                        <button v-on:click="deleteRouteList(idxList)">delete</button>
+                        <button v-on:click="viewRouteList(idxList)">view</button>
+                    </div>
+                </div>
+                <div class="route-item" v-for="route in routes" :key="route">{{ route }}</div>
+            </div>
+            <div class="search">
+                <div class="from-to"  >
+                    <div class="from">
+                        <label for="from">Von:</label>
+                        <input type="text" id="from" v-model="from" placeholder="Sargans">
+                    </div>
+                    <div class="to">
+                        <label for="to">Nach:</label>
+                        <input type="text" id="to" v-model="to" placeholder="Chur" @click.key.enter="searchRoutes">
+                    </div>
+                </div>
+                <button @click="searchRoutes">Suche nach Routen</button>
+                <p>Suche nach Routen Von: {{ from }} Nach: {{ to }}</p>
+            </div>
+            <div class="route-list">
+                <div class="route-list-item" v-for="(connection, index) in routeList" :key="index">
+                    <div class="route-header">
+                        <div class="route-icon">🚆</div>
+                        <div class="route-info">
+                            <div class="route-line">Richtung {{ connection.to.station.name }}</div>
+                            <div class="route-time"></div>
+                            <div class="route-platform">
+                                Gl. {{ connection.from.platform }}
+                            </div>
+                            <div class="route-duration">
+                                {{ calculateDuration(connection.from.departure, connection.to.arrival) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="route-progress">
+                        <div class="progress-dot"></div>
+                        <div class="progress-line"></div>
+                        <div class="progress-dot"></div>
+                    </div>
+                    <div class="route-capacity">
+                        <span>{{ formatTime(connection.from.departure) }}</span>
+                        <span>{{ formatTime(connection.to.arrival) }}</span>
+                    </div>
+
+                    <!-- Add to routelist -->
+
+                    <button @click="showChecklist(index)">Add to Routelist</button>
+                </div>
+                <div id="checklistDiv" :class="{ show: isChecklistVisible }">
+                    <div class="close-btn">
+                        <button @click="hideChecklist">Close</button>
+                    </div>
+                        <ul>
+                            <li v-for="(list, index) in routePlayList" :key="index" class="checklist-item">
+                                <input type="checkbox" v-model="list.checked" :key="index">
+                                <label :for="'item' + index">{{ list.name }}</label>
+                                <button id="addToPlayList" @click="addToFavorites(index)">add</button>
+                            </li>
+
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+            <script type="module" src="../src/script.js"></script>
+        </body>
+
+</html>

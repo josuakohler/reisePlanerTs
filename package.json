@@ -1,0 +1,23 @@
+{
+  "name": "reiseplanerts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@types/vue": "^2.0.0",
+    "lite-server": "^2.6.1"
+  },
+  "dependencies": {
+    "@babel/types": "^7.24.7",
+    "@vue/runtime-core": "^3.4.30",
+    "regenerator-runtime": "^0.14.1",
+    "typescript": "^5.5.2",
+    "vue": "^3.4.30"
+  }
+}
